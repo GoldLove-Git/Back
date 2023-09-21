@@ -7,7 +7,7 @@ export class InfluencersController {
     constructor(private influencersService: InfluencersService) { }
 
     @Get('/list')
-    getInfluencerList(): Promise<Influencers> {
+    getInfluencerList(): Promise<Influencers[]> {
         return this.influencersService.getInfluencerList();
     }
 

@@ -1,9 +1,29 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { Influencers } from './entities/influencers.entity';
+import { InfluencerDto } from './dto/response-influencer.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { InfluencerRepository } from './influencers.repository';
 
 @Injectable()
 export class InfluencersService {
-    async getInfluencerList(): Promise<Influencers> {
-        // return this.
+    constructor(
+        @InjectRepository(InfluencerRepository)
+        private influencerRepository: InfluencerRepository
+    ) {}
+
+    async getInfluencerList(): Promise<Influencers[]> {
+        return this.influencerRepository.find();
+    }
+
+    async getInfluencerInfo(name: string): Promise<Influencers> {
+        const query = this.influencerRepository.createQueryBuilder('influencers');
+        query.where('influencers.influencerId = :name', {name: name});
+
+        if (!query) {
+            throw new NotFoundException(`ID가 "${name}"인 인플루언서를 찾을 수 없습니다.`);
+        }
+        const influencer = await query.getOne();
+        
+        return influencer;
     }
 }
