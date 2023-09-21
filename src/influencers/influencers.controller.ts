@@ -17,5 +17,14 @@ export class InfluencersController {
     }
 
     // 골드 순위별 조회
+    @Get('/rank/gold/:n')
+    getGoldRank(@Param('n') n: number): Promise<Influencers[]> {
+        return this.influencersService.getGoldRank(n)
+    }
+
     // 투표 순위별 조회
+    @Get('/rank/vote/:n')
+    getVoteRank(@Param('n') n: number): Promise<Influencers[]> {
+        return this.influencersService.getVoteRank(n)
+    }
 }

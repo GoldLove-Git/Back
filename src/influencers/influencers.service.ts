@@ -1,6 +1,5 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { Influencers } from './entities/influencers.entity';
-import { InfluencerDto } from './dto/response-influencer.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { InfluencerRepository } from './influencers.repository';
 
@@ -25,5 +24,19 @@ export class InfluencersService {
         const influencer = await query.getOne();
         
         return influencer;
+    }
+
+    async getGoldRank(n: number): Promise<Influencers[]> {
+        return this.influencerRepository.find({
+            order: {nowGold: 'ASC'},
+            take: n
+        });
+    }
+
+    async getVoteRank(n: number): Promise<Influencers[]> {
+        return this.influencerRepository.find({
+            // order: {nowGold: 'ASC'},
+            take: n
+        });
     }
 }
