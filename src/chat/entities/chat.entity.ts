@@ -1,25 +1,27 @@
 import { Influencers } from 'src/influencers/entities/influencers.entity';
-
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, BeforeInsert, JoinColumn} from 'typeorm';
 
 @Entity('chat')
 export class Chat {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => Influencers, (influencer) => influencer.influencerId)
+  @ManyToOne(() => Influencers, (influencer : Influencers) => influencer.influencerId)
+  @JoinColumn({ name: 'influencerId', referencedColumnName: 'influencerId' })
+  influencerId: string; 
+ 
   @Column()
-  influencerId: string;
+  nickname: string; 
 
   @Column()
-  nickname: string;
+  comment: string; 
 
-  @Column()
-  comment: string;
-
-  @Column()
+  @Column({
+    default : false 
+  })
   delete: boolean;
 
   @Column()
-  CreatedAt: Date;
+  createdAt: Date;
+
 }

@@ -5,12 +5,14 @@ export class Influencers {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({
+    unique: true
+  })
   influencerId: string;
 
   @Column()
   influencerName: string;
-
+  
   @Column()
   nowGold: string;
 
