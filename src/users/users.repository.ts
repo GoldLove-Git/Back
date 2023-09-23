@@ -33,9 +33,7 @@ export class UsersRepository {
   async findUserByID(
     userId: string
   ): Promise<Users | undefined> {
-      const exUser = await this.usersRepository.findOne({
-        where: { userId }
-      });
+      const exUser = await this.usersRepository.findOneBy({userId});
       return exUser;
   }
 
