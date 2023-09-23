@@ -36,6 +36,11 @@ export class UsersService {
     return advertisement;
   }
 
+  // urser 정보 findByPk
+  async findUserByPk(userId: string): Promise<any> {
+    const user = await this.usersRepository.findUserByPk(userId);
+    return user;
+
   async setAd(data : any) {
     const { key, ai, ao, userId} : AdWriteDto = data
     const adCheck : AdCheckDto = {key ,ai, userId}
@@ -58,5 +63,6 @@ export class UsersService {
   async checkID(userId: string) {
     const exUser = await this.usersRepository.findUserByID(userId);
     return exUser;
+
   }
 }

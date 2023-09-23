@@ -18,7 +18,10 @@ export class UsersRepository {
   ): Promise<Users | undefined> {
     try {
       const exUser = await this.usersRepository.findOne({
-        where: { userId, password },
+        where: {
+          userId,
+          password,
+        },
       });
       return exUser;
     } catch (e) {
@@ -47,6 +50,12 @@ export class UsersRepository {
 
     const signupResult = await this.usersRepository.save(singupForm);
     return signupResult;
+  }
+
+  // userId로 유저 정보 찾기
+  async findUserByPk(userId: string): Promise<any> {
+    const user = await this.usersRepository.findOne({ where: { userId } });
+    return user;
   }
 
   async inputPoint(data : PointInput) {

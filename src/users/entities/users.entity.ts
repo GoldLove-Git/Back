@@ -16,7 +16,7 @@ export class Users {
   })
   userId: string;
 
-  @Column()
+  @Column({ nullable: true })
   email: string;
 
   @Column()
