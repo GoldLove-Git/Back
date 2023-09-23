@@ -1,6 +1,6 @@
 import { Body, Controller, Get, Post, Res, HttpStatus, Query } from '@nestjs/common';
 import { UsersService } from './users.service';
-
+import { SignUpDto } from './dto/signup.dto';
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
@@ -22,17 +22,11 @@ export class UsersController {
   }
 
   @Post('signup')
-  async signUp(@Body() body: any, @Res() res: any) {
-    const { userId, password, nickname, ageRange, gender } = body;
-    let user = await this.usersService.signUp(
-      userId,
-      password,
-      nickname,
-      ageRange,
-      gender,
-    );
+  async signUp(@Body() SignUpDto: SignUpDto, @Res() res: any) {
+    const { userId, email, password, nickname, ageRange, gender } = SignUpDto;
+    let user = await this.usersService.signUp(SignUpDto);
 
-    return 'signup';
+    return res.status(HttpStatus.OK).json({ message: '회원가입 성공' });
   }
 
   @Post('user/mypage')

@@ -2,7 +2,11 @@ import { Body, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Users } from './entities/users.entity';
 import { Repository } from 'typeorm';
+<<<<<<< HEAD
 import { PointInput } from './dto/pointInput.dto';
+=======
+import { SignUpDto } from './dto/signup.dto';
+>>>>>>> ba056e297614b971e0da3989e0efe77fec725ec7
 
 @Injectable()
 export class UsersRepository {
@@ -26,21 +30,16 @@ export class UsersRepository {
     }
   }
 
-  async signUp(
-    userId: string,
-    password: string,
-    nickname: string,
-    ageRange: number,
-    gender: string,
-  ) {
-    const signupResult = await this.usersRepository.save({
-      userId,
-      password,
-      nickname,
-      ageRange,
-      gender,
-    });
+  async signUp(SignUpDto: SignUpDto) {
+    const singupForm = new Users();
+    singupForm.userId = SignUpDto.userId;
+    singupForm.email = SignUpDto.email;
+    singupForm.password = SignUpDto.password;
+    singupForm.nickname = SignUpDto.nickname;
+    singupForm.ageRange = SignUpDto.ageRange;
+    singupForm.gender = SignUpDto.gender;
 
+    const signupResult = await this.usersRepository.save(singupForm);
     return signupResult;
   }
 

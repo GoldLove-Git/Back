@@ -1,5 +1,13 @@
 import { Users } from './users.entity';
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, JoinColumn } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  ManyToOne,
+  CreateDateColumn,
+  UpdateDateColumn,
+  JoinColumn
+} from 'typeorm';
 
 @Entity('advertisement')
 export class Advertisement {
@@ -19,9 +27,9 @@ export class Advertisement {
   @JoinColumn({ name: 'userId', referencedColumnName: 'userId' })
   userId: string;
 
-  @Column()
+  @CreateDateColumn({ type: 'timestamp' })
   createdAt: Date;
 
-  @Column()
+  @UpdateDateColumn({ type: 'timestamp' })
   updatedAt: Date;
 }

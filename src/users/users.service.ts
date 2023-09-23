@@ -6,12 +6,13 @@ import { Advertisement } from './entities/advertisement.entity';
 import { AdCheckDto } from './dto/adCheck.dto';
 import { AdWriteDto } from './dto/adWrite.dto';
 import { PointInput } from './dto/pointInput.dto';
+import { SignUpDto } from './dto/signup.dto';
 
 @Injectable()
 export class UsersService {
   constructor(
     private usersRepository: UsersRepository,
-    private advertisementRepository: AdvertisementRepository
+    private advertisementRepository: AdvertisementRepository,
   ) {}
 
   async findUser(userId: string, password: string) {
@@ -25,26 +26,14 @@ export class UsersService {
     return token;
   }
 
-  async signUp(
-    userId: string,
-    password: string,
-    nickname: string,
-    ageRange: number,
-    gender: string,
-  ) {
-    const signup = this.usersRepository.signUp(
-      userId,
-      password,
-      nickname,
-      ageRange,
-      gender,
-    );
+  async signUp(SignUpDto: SignUpDto) {
+    const signup = this.usersRepository.signUp(SignUpDto);
     return 'signUp';
   }
 
   async getAdvertiseHistory(userId: string): Promise<Advertisement[]> {
-    const advertisement = this.advertisementRepository.findAdByUser(userId)
-    return advertisement
+    const advertisement = this.advertisementRepository.findAdByUser(userId);
+    return advertisement;
   }
 
   async setAd(data : any) {
