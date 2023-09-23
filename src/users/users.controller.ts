@@ -23,13 +23,18 @@ export class UsersController {
 
   @Post('signup')
   async signUp(@Body() SignUpDto: SignUpDto, @Res() res: any) {
-    const { userId, email, password, nickname, ageRange, gender } = SignUpDto;
     let user = await this.usersService.signUp(SignUpDto);
+
+    if (!user) {
+      return res
+        .status(HttpStatus.BAD_REQUEST)
+        .json({ message: '회원가입 실패' });
+    }
 
     return res.status(HttpStatus.OK).json({ message: '회원가입 성공' });
   }
 
-  @Post('user/mypage')
+  @Post('mypage')
   async myPage(@Body() body: any, @Res() res: any) {
     let { userId } = body;
 
@@ -51,7 +56,8 @@ export class UsersController {
   }
 
   @Post('id/check')
-  async checkID(@Body() userId: string) {
+  async checkID(@Body() body: any) {
+    let { userId } = body;
     const exUser = await this.usersService.checkID(userId);
     if (!exUser) {
       return { isvalid: true }

@@ -36,23 +36,28 @@ export class UsersService {
     return advertisement;
   }
 
-  async setAd(data : any) {
-    const { key, ai, ao, userId} : AdWriteDto = data
-    const adCheck : AdCheckDto = {key ,ai, userId}
-    const adCheckRes = await this.advertisementRepository.adCheck(adCheck)
-    if(adCheckRes) {
+
+  // urser 정보 findByPk
+  async findUserByPk(userId: string): Promise<any> {
+    const user = await this.usersRepository.findUserByPk(userId);
+    return user;
+  }
+  async setAd(data: any) {
+    const { key, ai, ao, userId }: AdWriteDto = data;
+    const adCheck: AdCheckDto = { key, ai, userId };
+    const adCheckRes = await this.advertisementRepository.adCheck(adCheck);
+    if (!adCheckRes) {
       return {
-        message : '참여 기록이 있습니다' 
-      }
+        message: '참여 기록이 있습니다',
+      };
     }
 
-    const inputPoint : PointInput = {userId, ao}
-    await this.advertisementRepository.writeAd(data)
-    await this.usersRepository.inputPoint(inputPoint)
+    const inputPoint: PointInput = { userId, ao };
+    await this.advertisementRepository.writeAd(data);
+    await this.usersRepository.inputPoint(inputPoint);
     return {
-      message : '참여가 완료되었습니다' 
-    }
-
+      message: '참여가 완료되었습니다',
+    };
   }
 
   async checkID(userId: string) {
