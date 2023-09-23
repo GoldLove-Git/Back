@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { UsersRepository } from './users.repository';
 import { AdvertisementRepository } from './advertisement.repository';
+import { GoldHistoryRepository } from './goldhistory.repository';
 import * as jwt from 'jsonwebtoken';
 import { Advertisement } from './entities/advertisement.entity';
 import { AdCheckDto } from './dto/adCheck.dto';
@@ -14,6 +15,7 @@ export class UsersService {
   constructor(
     private usersRepository: UsersRepository,
     private advertisementRepository: AdvertisementRepository,
+    private goldhistory: GoldHistoryRepository,
     private influencerRepository : InfluencerRepository
   ) {}
 
@@ -37,7 +39,6 @@ export class UsersService {
     const advertisement = this.advertisementRepository.findAdByUser(userId);
     return advertisement;
   }
-
 
   // urser 정보 findByPk
   async findUserByPk(userId: string): Promise<any> {
@@ -71,5 +72,11 @@ export class UsersService {
   async checkID(userId: string) {
     const exUser = await this.usersRepository.findUserByID(userId);
     return exUser;
+  }
+
+  // 지급 골드 내역 조회
+  async getGoldHistory(userId: string) {
+    const goldHistory = await this.goldhistory.getGoldHistory(userId);
+    return goldHistory;
   }
 }
