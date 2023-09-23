@@ -50,7 +50,7 @@ export class UsersService {
     const adCheck: AdCheckDto = { key, ai, uid };
     const adCheckRes = await this.advertisementRepository.adCheck(adCheck);
     if (adCheckRes) {
-      console.log('asdasd' + adCheckRes);
+      //console.log('asdasd' + adCheckRes);
       return {
         message: '참여 기록이 있습니다',
       };
@@ -83,7 +83,7 @@ export class UsersService {
   // 마이페이지
   async myPage(userId: string) {
     const user = await this.usersRepository.findUserInfo(userId);
-    console.log(user);
+    //console.log(user);
     return user;
   }
 }
