@@ -86,4 +86,11 @@ export class UsersController {
     }
     return await this.usersService.setAd(data);
   }
+
+  @Post('donate')
+  // TODO: 로그인한 사용자의 userId 받아오는 로직 추가
+  async donate(@Body() {body}: any) {
+    const { userId, influencer_id, gold } = body;
+    return await this.usersService.donate(userId, influencer_id, gold);
+  }
 }
