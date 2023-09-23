@@ -6,9 +6,11 @@ import {
   Res,
   HttpStatus,
   Query,
+  Param,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { SignUpDto } from './dto/signup.dto';
+import axios from 'axios';
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
@@ -92,5 +94,19 @@ export class UsersController {
   async donate(@Body() {body}: any) {
     const { userId, influencer_id, gold } = body;
     return await this.usersService.donate(userId, influencer_id, gold);
+  }
+
+  @Get('/adlist')
+  async fetchAdList() {
+    const api_url = 'https://api.i-screen.kr'
+    try {
+      //const response = await axios.get(`${api_url}/Inappapi/web_ads_list?apikey=${apikey}&appcode=${appcode}`)
+      const response = await axios.get('https://api.i-screen.kr/Inappapi/web_ads_list?apikey=ccwwcgg8w4kgkkc04so80k88wgkg4k48ssscc0ck&appcode=BqqEHdXeOl')
+      console.log(response.data.list_data)
+      return response.data.list_data
+    }
+    catch (error) {
+      console.log(error)
+    }
   }
 }
