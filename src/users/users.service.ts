@@ -54,4 +54,9 @@ export class UsersService {
     }
 
   }
+
+  async checkID(userId: string) {
+    const exUser = await this.usersRepository.findUserByID(userId);
+    return exUser;
+  }
 }
