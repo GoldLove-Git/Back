@@ -17,6 +17,25 @@ export class UsersService {
     private influencerRepository : InfluencerRepository
   ) {}
 
+  private calculateRange(value: number): number {
+    if (value <= 500000) {
+      /* 누적 골드 50000까지의 범위 */
+      return 1;
+    }
+    else if (value <= 1000000 ) {
+      /* 누적 골드 1000000까지의 범위 */
+      return 2;
+    }
+    else if (value <= 3000000) {
+      /* 누적 골드 3000000까지의 범위 */
+      return 3;
+    }
+    else if (value <= 10000000) {
+      /* 누적 골드 10000000까지의 범위 */
+      return 4;
+    }
+  }
+
   async findUser(userId: string, password: string) {
     const exUser = await this.usersRepository.findUserByUser(userId, password);
     return exUser;
@@ -71,5 +90,25 @@ export class UsersService {
   async checkID(userId: string) {
     const exUser = await this.usersRepository.findUserByID(userId);
     return exUser;
+  }
+
+  async donate(userId: string, influencer_id: string, gold: number) {
+    // 인플루언서의 gold 증가, 사용자의 gold 감소
+    const user = await this.usersRepository.findUserByID(userId)
+    const influencer = await this.influencerRepository.findOneBy({ influencerId: influencer_id })
+
+    if (user.gold >= gold) {
+      influencer.nowGold += gold
+      influencer.goldStep = this.calculateRange(influencer.nowGold)
+
+      await this.usersRepository.donateGold(user.userId, gold);
+      await this.influencerRepository.save(influencer);
+    }
+
+    return {
+      success: user.gold >= gold? true : false,
+      influencer_name: influencer.influencerName,
+      gold: gold
+    }
   }
 }

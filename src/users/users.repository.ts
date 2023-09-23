@@ -68,4 +68,14 @@ export class UsersRepository {
     await this.usersRepository.save(result)
   }
 
+  async donateGold(userId: string, gold: number) {
+    const user = await this.usersRepository.findOneBy({userId})
+    if (user) {
+      user.gold -= gold
+      await this.usersRepository.save(user)
+    }
+    else {
+      throw new NotFoundException(userId);
+    }
+  }
 }
