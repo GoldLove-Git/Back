@@ -16,6 +16,10 @@ export class ChatService {
         return this.chat.find({
             where : {
                 influencerId : influencerId
+            },
+            take : 20,
+            order : {
+                CreatedAt : 'DESC'
             }
         })
 
