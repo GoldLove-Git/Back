@@ -1,5 +1,13 @@
 import { Users } from './users.entity';
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  ManyToOne,
+  CreateDateColumn,
+  UpdateDateColumn,
+  JoinColumn
+} from 'typeorm';
 
 @Entity('advertisement')
 export class Advertisement {
@@ -7,15 +15,21 @@ export class Advertisement {
   id: number;
 
   @Column()
-  advId: string;
+  ai: string;
+
+  @Column()
+  ao: string;
+
+  @Column()
+  key : string;
 
   @ManyToOne(() => Users, (user) => user.id)
-  @Column()
+  @JoinColumn({ name: 'userId', referencedColumnName: 'userId' })
   userId: string;
 
-  @Column()
+  @CreateDateColumn({ type: 'timestamp' })
   createdAt: Date;
 
-  @Column()
+  @UpdateDateColumn({ type: 'timestamp' })
   updatedAt: Date;
 }
