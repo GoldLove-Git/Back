@@ -1,5 +1,14 @@
 import { Influencers } from 'src/influencers/entities/influencers.entity';
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, BeforeInsert, JoinColumn} from 'typeorm';
+
+
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  ManyToOne,
+  BeforeInsert, 
+  JoinColumn} from 'typeorm';
+
 
 @Entity('chat')
 export class Chat {
@@ -21,7 +30,6 @@ export class Chat {
   })
   delete: boolean;
 
-  @Column()
-  createdAt: Date;
-
+  @CreateDateColumn({ type: 'timestamp' })
+  CreatedAt: Date;
 }

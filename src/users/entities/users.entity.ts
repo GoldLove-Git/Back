@@ -1,4 +1,10 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  CreateDateColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 
 @Entity('users')
 export class Users {
@@ -23,12 +29,12 @@ export class Users {
   @Column()
   ageRange: number;
 
-  @Column()
+  @Column({ default: 0 })
   gold: number;
 
-  @Column()
+  @CreateDateColumn({ type: 'timestamp' })
   createdAt: Date;
 
-  @Column()
+  @UpdateDateColumn({ type: 'timestamp' })
   updatedAt: Date;
 }

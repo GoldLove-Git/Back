@@ -1,4 +1,10 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  CreateDateColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 
 @Entity('influencers')
 export class Influencers {
@@ -19,9 +25,9 @@ export class Influencers {
   @Column()
   nowGold: string;
 
-  @Column()
+  @CreateDateColumn({ type: 'timestamp' })
   CreatedAt: Date;
 
-  @Column()
+  @UpdateDateColumn({ type: 'timestamp' })
   updatedAt: Date;
 }
