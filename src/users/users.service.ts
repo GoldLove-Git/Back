@@ -7,12 +7,14 @@ import { AdCheckDto } from './dto/adCheck.dto';
 import { AdWriteDto } from './dto/adWrite.dto';
 import { PointInput } from './dto/pointInput.dto';
 import { SignUpDto } from './dto/signup.dto';
+import { InfluencerRepository } from 'src/influencers/influencers.repository';
 
 @Injectable()
 export class UsersService {
   constructor(
     private usersRepository: UsersRepository,
     private advertisementRepository: AdvertisementRepository,
+    private influencerRepository : InfluencerRepository
   ) {}
 
   async findUser(userId: string, password: string) {
@@ -43,7 +45,7 @@ export class UsersService {
     return user;
   }
   async setAd(data: any) {
-    const { key, ai, ao, uid }: AdWriteDto = data;
+    const { key, ai, ao, uid, ak }: AdWriteDto = data;
     const adCheck: AdCheckDto = { key, ai, uid }; 
     const adCheckRes = await this.advertisementRepository.adCheck(adCheck);
     if (adCheckRes) {
@@ -54,8 +56,13 @@ export class UsersService {
     }
 
     const inputPoint: PointInput = { uid, ao };
-    await this.advertisementRepository.writeAd(data);
     await this.usersRepository.inputPoint(inputPoint);
+    const vote = await this.influencerRepository.findOne({
+        where : {influencerId : ak}
+      })
+    vote.vote += 1
+    await this.influencerRepository.save(vote)
+    await this.advertisementRepository.writeAd(data);
     return {
       message: '참여가 완료되었습니다',
     };
