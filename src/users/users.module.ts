@@ -8,6 +8,7 @@ import { Advertisement } from './entities/advertisement.entity';
 import { AdvertisementRepository } from './advertisement.repository';
 import { GoldHistory } from './entities/goldHistory.entity';
 import { GoldHistoryRepository } from './goldhistory.repository';
+import { InfluencerRepository } from 'src/influencers/influencers.repository';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Users, Advertisement, GoldHistory])],
@@ -17,7 +18,8 @@ import { GoldHistoryRepository } from './goldhistory.repository';
     UsersRepository,
     AdvertisementRepository,
     GoldHistoryRepository,
+    InfluencerRepository
   ],
   exports: [UsersService],
 })
-export class UsersModule {}
+export class UsersModule {}  

@@ -1,4 +1,4 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { InfluencersService } from './influencers.service';
 import { Influencers } from './entities/influencers.entity';
 
@@ -28,4 +28,9 @@ export class InfluencersController {
         return this.influencersService.getVoteRank(n)
     }
    
+    @Post('/search')
+    searchByName(@Body() body: any) {
+        const { name } = body;
+        return this.influencersService.searchNameContaining(name);
+    }
 }

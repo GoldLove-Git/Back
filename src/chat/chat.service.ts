@@ -26,7 +26,7 @@ export class ChatService {
   async setChat(chatInputDto: ChatInputDto): Promise<Chat> {
     const result = this.chat.create({
       comment: chatInputDto.comment,
-      nickname: chatInputDto.nickname,
+      userId: chatInputDto.userId,
       influencerId: chatInputDto.influencerId,
     });
     await this.chat.save(result);

@@ -39,4 +39,11 @@ export class InfluencersService {
             take: n
         });
     }
+
+    async searchNameContaining(name: string): Promise<Influencers[]> {
+        const names = await this.influencerRepository.createQueryBuilder('influencers')
+            .where('influencers.influencerName LIKE :name', { name: `${name}%` })
+            .getMany();
+        return names;
+    }
 }
