@@ -1,5 +1,5 @@
 export class AdCheckDto {
-    userId : string;
+    uid : string;
     ai : string;
     key : string;
 }

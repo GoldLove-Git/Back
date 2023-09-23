@@ -1,6 +1,7 @@
 export class AdWriteDto {
-    userId : string;
+    uid : string;
     ai : string;
     ao : string;
     key : string;
+    ak : string 
 }

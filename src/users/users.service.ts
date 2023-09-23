@@ -43,16 +43,17 @@ export class UsersService {
     return user;
   }
   async setAd(data: any) {
-    const { key, ai, ao, userId }: AdWriteDto = data;
-    const adCheck: AdCheckDto = { key, ai, userId };
+    const { key, ai, ao, uid }: AdWriteDto = data;
+    const adCheck: AdCheckDto = { key, ai, uid }; 
     const adCheckRes = await this.advertisementRepository.adCheck(adCheck);
-    if (!adCheckRes) {
+    if (adCheckRes) {
+      console.log('asdasd'+adCheckRes)
       return {
         message: '참여 기록이 있습니다',
       };
     }
 
-    const inputPoint: PointInput = { userId, ao };
+    const inputPoint: PointInput = { uid, ao };
     await this.advertisementRepository.writeAd(data);
     await this.usersRepository.inputPoint(inputPoint);
     return {

@@ -59,7 +59,7 @@ export class UsersRepository {
   async inputPoint(data : PointInput) {
     const result = await this.usersRepository.findOne({
       where : {
-        userId : data.userId
+        userId : data.uid
       }
     })
     if(result) {
