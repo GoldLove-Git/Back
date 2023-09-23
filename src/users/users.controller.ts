@@ -100,8 +100,7 @@ export class UsersController {
   async fetchAdList() {
     const api_url = 'https://api.i-screen.kr'
     try {
-      //const response = await axios.get(`${api_url}/Inappapi/web_ads_list?apikey=${apikey}&appcode=${appcode}`)
-      const response = await axios.get('https://api.i-screen.kr/Inappapi/web_ads_list?apikey=ccwwcgg8w4kgkkc04so80k88wgkg4k48ssscc0ck&appcode=BqqEHdXeOl')
+      const response = await axios.get(`https://api.i-screen.kr/Inappapi/web_ads_list?apikey=${process.env.API_KEY}&appcode=${process.env.APP_CODE}`)
       console.log(response.data.list_data)
       return response.data.list_data
     }
