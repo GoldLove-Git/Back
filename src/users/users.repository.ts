@@ -10,9 +10,8 @@ import { SignUpDto } from './dto/signup.dto';
 export class UsersRepository {
   constructor(
     @InjectRepository(Users)
-    private readonly usersRepository: Repository<Users>,
-  ) //private readonly goldHistoryRepository: Repository<GoldHistory>,
-  {}
+    private readonly usersRepository: Repository<Users>, //private readonly goldHistoryRepository: Repository<GoldHistory>,
+  ) {}
 
   async findUserByUser(
     userId: string,
@@ -58,23 +57,33 @@ export class UsersRepository {
 
   async inputPoint(data: PointInput) {
     const result = await this.usersRepository.findOne({
-      where : {
-        userId : data.uid
-      }
-    })
-    if(result) {
-      result.gold += Number(data.ao)
+      where: {
+        userId: data.uid,
+      },
+    });
+    if (result) {
+      result.gold += Number(data.ao);
     }
     await this.usersRepository.save(result);
   }
 
-  // // 지급 골드 내역 조회
-  // async getGoldHistory(userId: string) {
-  //   const goldHistory = await this.goldHistoryRepository.find({
-  //     where: {
-  //       userId,
-  //     },
-  //   });
-  //   return goldHistory;
-  // }
+  async findUserInfo(userId: string) {
+    const exUser = await this.usersRepository.findOne({
+      where: {
+        userId,
+      },
+      select: {
+        userId: true,
+        nickname: true,
+        gold: true,
+      },
+    });
+    const userData = {
+      userId: exUser.userId,
+      nickname: exUser.nickname,
+      gold: exUser.gold,
+    };
+    console.log(userData);
+    return userData;
+  }
 }
