@@ -27,4 +27,5 @@ export class InfluencersController {
     getVoteRank(@Param('n') n: number): Promise<Influencers[]> {
         return this.influencersService.getVoteRank(n)
     }
+   
 }

@@ -11,7 +11,9 @@ export class Users {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({
+    unique: true
+  })
   userId: string;
 
   @Column()
@@ -31,7 +33,7 @@ export class Users {
 
   @Column({ default: 0 })
   gold: number;
-
+ 
   @CreateDateColumn({ type: 'timestamp' })
   createdAt: Date;
 
