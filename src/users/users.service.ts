@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { UsersRepository } from './users.repository';
 import { AdvertisementRepository } from './advertisement.repository';
+import { GoldHistoryRepository } from './goldhistory.repository';
 import * as jwt from 'jsonwebtoken';
 import { Advertisement } from './entities/advertisement.entity';
 import { AdCheckDto } from './dto/adCheck.dto';
@@ -14,7 +15,8 @@ export class UsersService {
   constructor(
     private usersRepository: UsersRepository,
     private advertisementRepository: AdvertisementRepository,
-    private influencerRepository : InfluencerRepository
+    private goldhistory: GoldHistoryRepository,
+    private influencerRepository: InfluencerRepository,
   ) {}
 
   private calculateRange(value: number): number {
@@ -57,7 +59,6 @@ export class UsersService {
     return advertisement;
   }
 
-
   // urser 정보 findByPk
   async findUserByPk(userId: string): Promise<any> {
     const user = await this.usersRepository.findUserByPk(userId);
@@ -65,10 +66,10 @@ export class UsersService {
   }
   async setAd(data: any) {
     const { key, ai, ao, uid, ak }: AdWriteDto = data;
-    const adCheck: AdCheckDto = { key, ai, uid }; 
+    const adCheck: AdCheckDto = { key, ai, uid };
     const adCheckRes = await this.advertisementRepository.adCheck(adCheck);
     if (adCheckRes) {
-      console.log('asdasd'+adCheckRes)
+      //console.log('asdasd' + adCheckRes);
       return {
         message: '참여 기록이 있습니다',
       };
@@ -77,10 +78,10 @@ export class UsersService {
     const inputPoint: PointInput = { uid, ao };
     await this.usersRepository.inputPoint(inputPoint);
     const vote = await this.influencerRepository.findOne({
-        where : {influencerId : ak}
-      })
-    vote.vote += 1
-    await this.influencerRepository.save(vote)
+      where: { influencerId: ak },
+    });
+    vote.vote += 1;
+    await this.influencerRepository.save(vote);
     await this.advertisementRepository.writeAd(data);
     return {
       message: '참여가 완료되었습니다',
@@ -110,5 +111,18 @@ export class UsersService {
       influencer_name: influencer.influencerName,
       gold: gold
     }
+  }
+
+  // 지급 골드 내역 조회
+  async getGoldHistory(userId: string) {
+    const goldHistory = await this.goldhistory.getGoldHistory(userId);
+    return goldHistory;
+  }
+
+  // 마이페이지
+  async myPage(userId: string) {
+    const user = await this.usersRepository.findUserInfo(userId);
+    //console.log(user);
+    return user;
   }
 }

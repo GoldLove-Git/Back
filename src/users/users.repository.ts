@@ -1,6 +1,7 @@
 import { Body, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Users } from './entities/users.entity';
+//import { GoldHistory } from './entities/goldHistory.entity';
 import { Repository } from 'typeorm';
 import { PointInput } from './dto/pointInput.dto';
 import { SignUpDto } from './dto/signup.dto';
@@ -9,7 +10,7 @@ import { SignUpDto } from './dto/signup.dto';
 export class UsersRepository {
   constructor(
     @InjectRepository(Users)
-    private readonly usersRepository: Repository<Users>,
+    private readonly usersRepository: Repository<Users>, //private readonly goldHistoryRepository: Repository<GoldHistory>,
   ) {}
 
   async findUserByUser(
@@ -30,11 +31,9 @@ export class UsersRepository {
     }
   }
 
-  async findUserByID(
-    userId: string
-  ): Promise<Users | undefined> {
-      const exUser = await this.usersRepository.findOneBy({userId});
-      return exUser;
+  async findUserByID(userId: string): Promise<Users | undefined> {
+    const exUser = await this.usersRepository.findOneBy({ userId });
+    return exUser;
   }
 
   async signUp(SignUpDto: SignUpDto) {
@@ -56,16 +55,16 @@ export class UsersRepository {
     return user;
   }
 
-  async inputPoint(data : PointInput) {
+  async inputPoint(data: PointInput) {
     const result = await this.usersRepository.findOne({
-      where : {
-        userId : data.uid
-      }
-    })
-    if(result) {
-      result.gold += Number(data.ao)
+      where: {
+        userId: data.uid,
+      },
+    });
+    if (result) {
+      result.gold += Number(data.ao);
     }
-    await this.usersRepository.save(result)
+    await this.usersRepository.save(result);
   }
 
   async donateGold(userId: string, gold: number) {
@@ -77,5 +76,25 @@ export class UsersRepository {
     else {
       throw new NotFoundException(userId);
     }
+  }
+
+  async findUserInfo(userId: string) {
+    const exUser = await this.usersRepository.findOne({
+      where: {
+        userId,
+      },
+      select: {
+        userId: true,
+        nickname: true,
+        gold: true,
+      },
+    });
+    const userData = {
+      userId: exUser.userId,
+      nickname: exUser.nickname,
+      gold: exUser.gold,
+    };
+    //console.log(userData);
+    return userData;
   }
 }

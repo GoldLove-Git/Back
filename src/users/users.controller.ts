@@ -43,25 +43,27 @@ export class UsersController {
     return res.status(HttpStatus.OK).json({ message: '회원가입 성공' });
   }
 
-  @Post('mypage')
+  @Get('mypage')
   async myPage(@Body() body: any, @Res() res: any) {
     let { userId } = body;
+    const data = await this.usersService.myPage(userId);
 
-    return 'mypage';
+    return res.status(HttpStatus.OK).json({ data });
   }
 
   @Get('goldhistory')
   async goldHistory(@Body() body: any, @Res() res: any) {
     let { userId } = body;
+    const data = await this.usersService.getGoldHistory(userId);
 
-    return 'goldhistory';
+    return res.status(HttpStatus.OK).json({ data });
   }
 
   @Get('advertisehistory')
   async advertiseHistory(@Body() body: any, @Res() res: any) {
     let { userId } = body;
-
-    return this.usersService.getAdvertiseHistory(userId);
+    const data = await this.usersService.getAdvertiseHistory(userId);
+    return res.status(HttpStatus.OK).json({ data });
   }
 
   @Post('id/check')
