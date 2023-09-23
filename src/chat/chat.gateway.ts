@@ -14,7 +14,7 @@ import { ChatByInfluencerDto } from './dto/chatByinfluencer.dto';
 
 @WebSocketGateway({
   cors: {
-    origin: ['http://localhost:5173'],
+    origin: ['http://goldlove.s3-website.ap-northeast-2.amazonaws.com'],
     credentials: true,
   },
 })
