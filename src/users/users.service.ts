@@ -36,7 +36,6 @@ export class UsersService {
     return advertisement;
   }
 
-
   // urser 정보 findByPk
   async findUserByPk(userId: string): Promise<any> {
     const user = await this.usersRepository.findUserByPk(userId);
@@ -63,5 +62,11 @@ export class UsersService {
   async checkID(userId: string) {
     const exUser = await this.usersRepository.findUserByID(userId);
     return exUser;
+  }
+
+  // 지급 골드 내역 조회
+  async getGoldHistory(userId: string) {
+    const goldHistory = await this.usersRepository.getGoldHistory(userId);
+    return goldHistory;
   }
 }

@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Post, Res, HttpStatus, Query } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Post,
+  Res,
+  HttpStatus,
+  Query,
+} from '@nestjs/common';
 import { UsersService } from './users.service';
 import { SignUpDto } from './dto/signup.dto';
 @Controller('users')
@@ -44,8 +52,9 @@ export class UsersController {
   @Get('goldhistory')
   async goldHistory(@Body() body: any, @Res() res: any) {
     let { userId } = body;
+    const goldHistory = await this.usersService.getGoldHistory(userId);
 
-    return 'goldhistory';
+    return goldHistory;
   }
 
   @Get('advertisehistory')
@@ -60,15 +69,14 @@ export class UsersController {
     let { userId } = body;
     const exUser = await this.usersService.checkID(userId);
     if (!exUser) {
-      return { isvalid: true }
-    }
-    else {
-      return { isvalid: false }
+      return { isvalid: true };
+    } else {
+      return { isvalid: false };
     }
   }
 
   @Get('postback')
   async postback(@Query() data: any) {
-    return await this.usersService.setAd(data)
+    return await this.usersService.setAd(data);
   }
 }
