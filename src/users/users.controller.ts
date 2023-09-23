@@ -62,8 +62,8 @@ export class UsersController {
   @Get('advertisehistory')
   async advertiseHistory(@Body() body: any, @Res() res: any) {
     let { userId } = body;
-
-    return this.usersService.getAdvertiseHistory(userId);
+    const data = await this.usersService.getAdvertiseHistory(userId);
+    return res.status(HttpStatus.OK).json({ data });
   }
 
   @Post('id/check')
