@@ -11,6 +11,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
     ])
   ],
   controllers: [InfluencersController],
-  providers: [InfluencersService, InfluencerRepository]
-})
+  providers: [InfluencersService, InfluencerRepository],
+  exports : [InfluencerRepository]
+}) 
 export class InfluencersModule {}
