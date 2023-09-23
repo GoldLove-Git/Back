@@ -83,7 +83,7 @@ export class UsersRepository {
       nickname: exUser.nickname,
       gold: exUser.gold,
     };
-    console.log(userData);
+    //console.log(userData);
     return userData;
   }
 }
