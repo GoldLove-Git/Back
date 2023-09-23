@@ -50,13 +50,13 @@ export class UsersController {
     return 'mypage';
   }
 
-  // @Get('goldhistory')
-  // async goldHistory(@Body() body: any, @Res() res: any) {
-  //   let { userId } = body;
-  //   const goldHistory = await this.usersService.getGoldHistory(userId);
+  @Get('goldhistory')
+  async goldHistory(@Body() body: any, @Res() res: any) {
+    let { userId } = body;
+    const goldHistory = await this.usersService.getGoldHistory(userId);
 
-  //   return goldHistory;
-  // }
+    return goldHistory;
+  }
 
   @Get('advertisehistory')
   async advertiseHistory(@Body() body: any, @Res() res: any) {

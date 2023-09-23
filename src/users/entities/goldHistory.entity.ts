@@ -13,7 +13,6 @@ export class GoldHistory {
   id: number;
 
   //유저 아이디
-  @ManyToOne(() => Users, (user) => user.userId)
   @Column()
   userId: string;
 
@@ -22,8 +21,12 @@ export class GoldHistory {
   type: string;
 
   //인플루언서 아이디
+  // @Column()
+  // influencerId: string;
+
+  //인플루언서 아이디
   @Column()
-  influencerId: string;
+  influencerName: string;
 
   //현재 골드 보유량
   @Column()
@@ -31,7 +34,7 @@ export class GoldHistory {
 
   //사용 골드
   @Column({ default: 0 })
-  useGold: number;
+  gold: number;
 
   //획득골드
   @Column({ default: 0 })
@@ -40,6 +43,10 @@ export class GoldHistory {
   //남은 골드
   @Column()
   remainGold: number;
+
+  //
+  @CreateDateColumn({ type: 'timestamp' })
+  date: Date;
 
   //생성일
   @CreateDateColumn({ type: 'timestamp' })
