@@ -14,12 +14,12 @@ export class InfluencersService {
         return this.influencerRepository.find();
     }
 
-    async getInfluencerInfo(name: string): Promise<Influencers> {
+    async getInfluencerInfo(id: string): Promise<Influencers> {
         const query = this.influencerRepository.createQueryBuilder('influencers');
-        query.where('influencers.influencerId = :name', {name: name});
+        query.where('influencers.influencerId = :id', {id: id});
 
         if (!query) {
-            throw new NotFoundException(`ID가 "${name}"인 인플루언서를 찾을 수 없습니다.`);
+            throw new NotFoundException(`ID가 "${id}"인 인플루언서를 찾을 수 없습니다.`);
         }
         const influencer = await query.getOne();
         
@@ -28,7 +28,7 @@ export class InfluencersService {
 
     async getGoldRank(n: number): Promise<Influencers[]> {
         return this.influencerRepository.find({
-            order: {nowGold: 'ASC'},
+            order: {nowGold: 'DESC'},
             take: n
         });
     }

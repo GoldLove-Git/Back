@@ -11,9 +11,9 @@ export class InfluencersController {
         return this.influencersService.getInfluencerList();
     }
 
-    @Get('/:influencer_name/info')
-    getInfluencerInfo(@Param('influencer_name') name: string): Promise<Influencers> {
-        return this.influencersService.getInfluencerInfo(name)
+    @Get('/:influencer_id/info')
+    getInfluencerInfo(@Param('influencer_id') id: string): Promise<Influencers> {
+        return this.influencersService.getInfluencerInfo(id)
     }
 
     // 골드 순위별 조회
