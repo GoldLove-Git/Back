@@ -36,6 +36,7 @@ export class UsersService {
     return advertisement;
   }
 
+
   // urser 정보 findByPk
   async findUserByPk(userId: string): Promise<any> {
     const user = await this.usersRepository.findUserByPk(userId);
