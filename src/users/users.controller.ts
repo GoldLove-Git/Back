@@ -51,7 +51,8 @@ export class UsersController {
   }
 
   @Post('id/check')
-  async checkID(@Body() userId: string) {
+  async checkID(@Body() body: any) {
+    let { userId } = body;
     const exUser = await this.usersService.checkID(userId);
     if (!exUser) {
       return { isvalid: true }
