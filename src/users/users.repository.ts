@@ -1,6 +1,7 @@
 import { Body, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Users } from './entities/users.entity';
+//import { GoldHistory } from './entities/goldHistory.entity';
 import { Repository } from 'typeorm';
 import { PointInput } from './dto/pointInput.dto';
 import { SignUpDto } from './dto/signup.dto';
@@ -10,7 +11,8 @@ export class UsersRepository {
   constructor(
     @InjectRepository(Users)
     private readonly usersRepository: Repository<Users>,
-  ) {}
+  ) //private readonly goldHistoryRepository: Repository<GoldHistory>,
+  {}
 
   async findUserByUser(
     userId: string,
@@ -30,11 +32,9 @@ export class UsersRepository {
     }
   }
 
-  async findUserByID(
-    userId: string
-  ): Promise<Users | undefined> {
-      const exUser = await this.usersRepository.findOneBy({userId});
-      return exUser;
+  async findUserByID(userId: string): Promise<Users | undefined> {
+    const exUser = await this.usersRepository.findOneBy({ userId });
+    return exUser;
   }
 
   async signUp(SignUpDto: SignUpDto) {
@@ -56,7 +56,7 @@ export class UsersRepository {
     return user;
   }
 
-  async inputPoint(data : PointInput) {
+  async inputPoint(data: PointInput) {
     const result = await this.usersRepository.findOne({
       where : {
         userId : data.uid
@@ -65,7 +65,16 @@ export class UsersRepository {
     if(result) {
       result.gold += Number(data.ao)
     }
-    await this.usersRepository.save(result)
+    await this.usersRepository.save(result);
   }
 
+  // // 지급 골드 내역 조회
+  // async getGoldHistory(userId: string) {
+  //   const goldHistory = await this.goldHistoryRepository.find({
+  //     where: {
+  //       userId,
+  //     },
+  //   });
+  //   return goldHistory;
+  // }
 }

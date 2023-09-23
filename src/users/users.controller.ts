@@ -28,6 +28,7 @@ export class UsersController {
     res.cookie('authorization', `Bearer ${token}`);
     return res.send(`Bearer ${token}`);
     // return res.status(HttpStatus.OK).json({ message: '로그인 성공' });
+
   }
 
   @Post('signup')
@@ -53,8 +54,9 @@ export class UsersController {
   @Get('goldhistory')
   async goldHistory(@Body() body: any, @Res() res: any) {
     let { userId } = body;
+    const goldHistory = await this.usersService.getGoldHistory(userId);
 
-    return 'goldhistory';
+    return res.status(HttpStatus.OK).json({ goldHistory });
   }
 
   @Get('advertisehistory')

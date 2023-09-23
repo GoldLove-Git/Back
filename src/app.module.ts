@@ -36,10 +36,10 @@ export class AppModule {
   configure(consumer: MiddlewareConsumer) {
     consumer
       .apply(AuthMiddleWare)
-      .forRoutes(
-        { path: '/users/advertisehistory', method: RequestMethod.GET },
-        { path: '/users/goldhistory', method: RequestMethod.GET },
-        { path: '/users/mypage', method: RequestMethod.POST },
-      );
+      .forRoutes
+      //{ path: '/users/advertisehistory', method: RequestMethod.GET },
+      //{ path: '/users/goldhistory', method: RequestMethod.GET },
+      //{ path: '/users/mypage', method: RequestMethod.POST },
+      ();
   }
 }
