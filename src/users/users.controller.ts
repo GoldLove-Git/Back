@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Res, HttpStatus } from '@nestjs/common';
+import { Body, Controller, Get, Post, Res, HttpStatus, Query } from '@nestjs/common';
 import { UsersService } from './users.service';
 
 @Controller('users')
@@ -54,5 +54,10 @@ export class UsersController {
     let { userId } = body;
 
     return this.usersService.getAdvertiseHistory(userId);
+  }
+
+  @Get('postback')
+  async postback(@Query() data : any) {
+    return await this.usersService.setAd(data)
   }
 }

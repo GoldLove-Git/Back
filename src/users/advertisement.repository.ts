@@ -2,6 +2,8 @@ import { Body, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Advertisement } from './entities/advertisement.entity';
+import { AdCheckDto } from './dto/adCheck.dto';
+import { AdWriteDto } from './dto/adWrite.dto';
 
 @Injectable()
 export class AdvertisementRepository {
@@ -22,5 +24,24 @@ export class AdvertisementRepository {
       console.error(e.message);
       throw new Error('AdvertisementRepository / findAdByUser');
     }
+  }
+
+  async adCheck(adCheck : AdCheckDto) : Promise<Advertisement> {
+    return this.advertisementRepository.findOne({
+      where : {
+        ai : adCheck.ai,
+        userId : adCheck.userId,
+        key : adCheck.key
+      }
+    })
+  }
+
+  async writeAd(data : AdWriteDto) {
+    return this.advertisementRepository.create({
+      ai : data.ai,
+      ao : data.ao,
+      key : data.key,
+      userId : data.userId
+    })
   }
 }

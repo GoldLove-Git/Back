@@ -2,6 +2,7 @@ import { Body, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Users } from './entities/users.entity';
 import { Repository } from 'typeorm';
+import { PointInput } from './dto/pointInput.dto';
 
 @Injectable()
 export class UsersRepository {
@@ -42,4 +43,17 @@ export class UsersRepository {
 
     return signupResult;
   }
+
+  async inputPoint(data : PointInput) {
+    const result = await this.usersRepository.findOne({
+      where : {
+        userId : data.userId
+      }
+    })
+    if(result) {
+      result.gold += Number(data.ao)
+    }
+    await this.usersRepository.save(result)
+  }
+
 }
