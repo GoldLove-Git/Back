@@ -12,7 +12,7 @@ export class Users {
   id: number;
 
   @Column({
-    unique: true,
+    unique: true
   })
   userId: string;
 
@@ -33,7 +33,7 @@ export class Users {
 
   @Column({ default: 0 })
   gold: number;
-
+ 
   @CreateDateColumn({ type: 'timestamp' })
   createdAt: Date;
 

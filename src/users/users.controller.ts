@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Res, HttpStatus } from '@nestjs/common';
+import { Body, Controller, Get, Post, Res, HttpStatus, Query } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { SignUpDto } from './dto/signup.dto';
 @Controller('users')
@@ -53,5 +53,21 @@ export class UsersController {
     let { userId } = body;
 
     return this.usersService.getAdvertiseHistory(userId);
+  }
+
+  @Post('id/check')
+  async checkID(@Body() userId: string) {
+    const exUser = await this.usersService.checkID(userId);
+    if (!exUser) {
+      return { isvalid: true }
+    }
+    else {
+      return { isvalid: false }
+    }
+  }
+
+  @Get('postback')
+  async postback(@Query() data: any) {
+    return await this.usersService.setAd(data)
   }
 }

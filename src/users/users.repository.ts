@@ -1,7 +1,8 @@
-import { Body, Injectable } from '@nestjs/common';
+import { Body, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Users } from './entities/users.entity';
 import { Repository } from 'typeorm';
+import { PointInput } from './dto/pointInput.dto';
 import { SignUpDto } from './dto/signup.dto';
 
 @Injectable()
@@ -29,6 +30,15 @@ export class UsersRepository {
     }
   }
 
+  async findUserByID(
+    userId: string
+  ): Promise<Users | undefined> {
+      const exUser = await this.usersRepository.findOne({
+        where: { userId }
+      });
+      return exUser;
+  }
+
   async signUp(SignUpDto: SignUpDto) {
     const singupForm = new Users();
     singupForm.userId = SignUpDto.userId;
@@ -47,4 +57,17 @@ export class UsersRepository {
     const user = await this.usersRepository.findOne({ where: { userId } });
     return user;
   }
+
+  async inputPoint(data : PointInput) {
+    const result = await this.usersRepository.findOne({
+      where : {
+        userId : data.userId
+      }
+    })
+    if(result) {
+      result.gold += Number(data.ao)
+    }
+    await this.usersRepository.save(result)
+  }
+
 }
