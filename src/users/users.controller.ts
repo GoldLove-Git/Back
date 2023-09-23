@@ -110,17 +110,17 @@ export class UsersController {
 
   @Post('/joinAd')
   async joinAd(@Body() body : any) {
-    const { adId, userIP, userNetworkType, uid, id } = body
+    const { ai, ak, ap, net, uid } = body
     try {
       const response = await axios.post(`https://api.i-screen.kr/Inappapi/ads_join`, {
         apikey: `${process.env.API_KEY}`,
         ac: `${process.env.APP_CODE}`,
-        ai: adId,
-        ap: userIP,
-        net: userNetworkType,
+        ai: ai,
+        ap: ap,
+        net: net,
         uid: uid,
         pub: "",
-        ak: id,
+        ak: ak,
       })
       return response.data
     }
