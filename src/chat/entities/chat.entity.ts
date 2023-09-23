@@ -23,7 +23,7 @@ export class Chat {
   influencerId: string;
 
   @Column()
-  nickname: string;
+  userId: string;
 
   @Column()
   comment: string;

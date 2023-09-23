@@ -30,18 +30,20 @@ export class AdvertisementRepository {
     return this.advertisementRepository.findOne({
       where : {
         ai : adCheck.ai,
-        userId : adCheck.userId,
+        userId : adCheck.uid,
         key : adCheck.key
       }
     })
   }
 
   async writeAd(data : AdWriteDto) {
-    return this.advertisementRepository.create({
+    const result = this.advertisementRepository.create({
+      influencerId : data.ak,
       ai : data.ai,
       ao : data.ao,
       key : data.key,
-      userId : data.userId
+      userId : data.uid
     })
+    return await this.advertisementRepository.save(result)
   }
 }

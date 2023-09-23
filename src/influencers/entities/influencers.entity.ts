@@ -25,6 +25,11 @@ export class Influencers {
   @Column()
   nowGold: string;
 
+  @Column({
+    default : 0
+  })
+  vote : number;
+
   @CreateDateColumn({ type: 'timestamp' })
   CreatedAt: Date;
 

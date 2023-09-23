@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Post, Res, HttpStatus, Query } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Post,
+  Res,
+  HttpStatus,
+  Query,
+} from '@nestjs/common';
 import { UsersService } from './users.service';
 import { SignUpDto } from './dto/signup.dto';
 @Controller('users')
@@ -18,7 +26,8 @@ export class UsersController {
 
     const token = await this.usersService.getToken(userId);
     res.cookie('authorization', `Bearer ${token}`);
-    return res.status(HttpStatus.OK).json({ message: '로그인 성공' });
+    return res.send(`Bearer ${token}`);
+    // return res.status(HttpStatus.OK).json({ message: '로그인 성공' });
   }
 
   @Post('signup')
@@ -60,15 +69,19 @@ export class UsersController {
     let { userId } = body;
     const exUser = await this.usersService.checkID(userId);
     if (!exUser) {
-      return { isvalid: true }
-    }
-    else {
-      return { isvalid: false }
+      return { isvalid: true };
+    } else {
+      return { isvalid: false };
     }
   }
 
   @Get('postback')
   async postback(@Query() data: any) {
-    return await this.usersService.setAd(data)
+    if (data.key && data.ai && data.ao && data.userId) {
+      return {
+        message: '광고 정보 파라미터가 누락됐습니다',
+      };
+    }
+    return await this.usersService.setAd(data);
   }
 }

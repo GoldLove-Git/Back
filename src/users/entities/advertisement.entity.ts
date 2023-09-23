@@ -23,6 +23,9 @@ export class Advertisement {
   @Column()
   key : string;
 
+  @Column()
+  influencerId : string
+
   @ManyToOne(() => Users, (user) => user.id)
   @JoinColumn({ name: 'userId', referencedColumnName: 'userId' })
   userId: string;
