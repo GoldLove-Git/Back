@@ -55,4 +55,15 @@ export class UsersController {
 
     return this.usersService.getAdvertiseHistory(userId);
   }
+
+  @Post('id/check')
+  async checkID(@Body() userId: string) {
+    const exUser = await this.usersService.checkID(userId);
+    if (!exUser) {
+      return { isvalid: true }
+    }
+    else {
+      return { isvalid: false }
+    }
+  }
 }

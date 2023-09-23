@@ -43,4 +43,9 @@ export class UsersService {
     const advertisement = this.advertisementRepository.findAdByUser(userId)
     return advertisement
   }
+
+  async checkID(userId: string) {
+    const exUser = await this.usersRepository.findUserByID(userId);
+    return exUser;
+  }
 }
