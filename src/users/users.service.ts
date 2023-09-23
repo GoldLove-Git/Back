@@ -16,7 +16,7 @@ export class UsersService {
     private usersRepository: UsersRepository,
     private advertisementRepository: AdvertisementRepository,
     private goldhistory: GoldHistoryRepository,
-    private influencerRepository : InfluencerRepository
+    private influencerRepository: InfluencerRepository,
   ) {}
 
   async findUser(userId: string, password: string) {
@@ -47,10 +47,10 @@ export class UsersService {
   }
   async setAd(data: any) {
     const { key, ai, ao, uid, ak }: AdWriteDto = data;
-    const adCheck: AdCheckDto = { key, ai, uid }; 
+    const adCheck: AdCheckDto = { key, ai, uid };
     const adCheckRes = await this.advertisementRepository.adCheck(adCheck);
     if (adCheckRes) {
-      console.log('asdasd'+adCheckRes)
+      console.log('asdasd' + adCheckRes);
       return {
         message: '참여 기록이 있습니다',
       };
@@ -59,10 +59,10 @@ export class UsersService {
     const inputPoint: PointInput = { uid, ao };
     await this.usersRepository.inputPoint(inputPoint);
     const vote = await this.influencerRepository.findOne({
-        where : {influencerId : ak}
-      })
-    vote.vote += 1
-    await this.influencerRepository.save(vote)
+      where: { influencerId: ak },
+    });
+    vote.vote += 1;
+    await this.influencerRepository.save(vote);
     await this.advertisementRepository.writeAd(data);
     return {
       message: '참여가 완료되었습니다',
@@ -78,5 +78,12 @@ export class UsersService {
   async getGoldHistory(userId: string) {
     const goldHistory = await this.goldhistory.getGoldHistory(userId);
     return goldHistory;
+  }
+
+  // 마이페이지
+  async myPage(userId: string) {
+    const user = await this.usersRepository.findUserInfo(userId);
+    console.log(user);
+    return user;
   }
 }
