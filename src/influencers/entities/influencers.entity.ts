@@ -23,12 +23,17 @@ export class Influencers {
   influencerImg: string;
 
   @Column()
-  nowGold: string;
+  nowGold: number;
 
   @Column({
     default : 0
   })
   vote : number;
+
+  @Column({
+    default : 1
+  })
+  goldStep : number;
 
   @CreateDateColumn({ type: 'timestamp' })
   CreatedAt: Date;

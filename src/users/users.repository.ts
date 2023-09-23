@@ -67,6 +67,17 @@ export class UsersRepository {
     await this.usersRepository.save(result);
   }
 
+  async donateGold(userId: string, gold: number) {
+    const user = await this.usersRepository.findOneBy({userId})
+    if (user) {
+      user.gold -= gold
+      await this.usersRepository.save(user)
+    }
+    else {
+      throw new NotFoundException(userId);
+    }
+  }
+
   async findUserInfo(userId: string) {
     const exUser = await this.usersRepository.findOne({
       where: {
@@ -83,7 +94,7 @@ export class UsersRepository {
       nickname: exUser.nickname,
       gold: exUser.gold,
     };
-    console.log(userData);
+    //console.log(userData);
     return userData;
   }
 }

@@ -1,42 +1,50 @@
-import { ConnectedSocket, MessageBody, OnGatewayConnection, SubscribeMessage, WebSocketGateway, WebSocketServer} from '@nestjs/websockets'
-import { Server, Socket } from 'socket.io'
+import {
+  ConnectedSocket,
+  MessageBody,
+  OnGatewayConnection,
+  SubscribeMessage,
+  WebSocketGateway,
+  WebSocketServer,
+} from '@nestjs/websockets';
+import { Server, Socket } from 'socket.io';
 import { ChatService } from './chat.service';
 import { ChatInputDto } from './dto/chatInput.dto';
 import { ChatListDto } from './dto/chatList.dto';
 import { ChatByInfluencerDto } from './dto/chatByinfluencer.dto';
 
-@WebSocketGateway()
+@WebSocketGateway({
+  cors: {
+    origin: [
+      'http://goldlove.s3-website.ap-northeast-2.amazonaws.com',
+      'http://localhost:5173',
+    ],
+    credentials: true,
+  },
+})
 export class ChatGateway implements OnGatewayConnection {
-    @WebSocketServer()
-    server : Server; 
-    constructor(
-        private readonly chatService : ChatService
-    ) {}
+  @WebSocketServer()
+  server: Server;
+  constructor(private readonly chatService: ChatService) {}
 
-    async handleConnection(socket : Socket) {
-        
-    }
+  async handleConnection(socket: Socket) {}
 
-    @SubscribeMessage('chat_input')
-    async chatInput(
-        @MessageBody() data : ChatInputDto,
-        @ConnectedSocket() socket : Socket
-    ) {
-        const result = await this.chatService.setChat(data)
+  @SubscribeMessage('chat_input')
+  async chatInput(
+    @MessageBody() data: ChatInputDto,
+    @ConnectedSocket() socket: Socket,
+  ) {
+    const result = await this.chatService.setChat(data);
 
-        this.server.sockets.emit('chat_output', result)
-    }
+    this.server.sockets.emit('chat_output', result);
+  }
 
-    @SubscribeMessage('req_chat_list')
-    async chatList(
-        @MessageBody() data : ChatByInfluencerDto,
-        @ConnectedSocket() socket : Socket
-    ) {
-        const result = await this.chatService.getChatList(data.influencerId)
-        
-        socket.emit('res_chat_list', result)
-    }
+  @SubscribeMessage('req_chat_list')
+  async chatList(
+    @MessageBody() data: ChatByInfluencerDto,
+    @ConnectedSocket() socket: Socket,
+  ) {
+    const result = await this.chatService.getChatList(data.influencerId);
 
-
-
+    socket.emit('res_chat_list', result);
+  }
 }

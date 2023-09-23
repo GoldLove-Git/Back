@@ -6,9 +6,11 @@ import {
   Res,
   HttpStatus,
   Query,
+  Param,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { SignUpDto } from './dto/signup.dto';
+import axios from 'axios';
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
@@ -62,8 +64,8 @@ export class UsersController {
   @Get('advertisehistory')
   async advertiseHistory(@Body() body: any, @Res() res: any) {
     let { userId } = body;
-
-    return this.usersService.getAdvertiseHistory(userId);
+    const data = await this.usersService.getAdvertiseHistory(userId);
+    return res.status(HttpStatus.OK).json({ data });
   }
 
   @Post('id/check')
@@ -85,5 +87,45 @@ export class UsersController {
       };
     }
     return await this.usersService.setAd(data);
+  }
+
+  @Post('donate')
+  // TODO: 로그인한 사용자의 userId 받아오는 로직 추가
+  async donate(@Body() body: any) {
+    const { userId, influencer_id, gold } = body;
+    return await this.usersService.donate(userId, influencer_id, gold);
+  }
+
+  @Get('/adlist')
+  async fetchAdList() {
+    const api_url = 'https://api.i-screen.kr'
+    try {
+      const response = await axios.get(`https://api.i-screen.kr/Inappapi/web_ads_list?apikey=${process.env.API_KEY}&appcode=${process.env.APP_CODE}`)
+      return response.data.list_data
+    }
+    catch (error) {
+      console.log(error)
+    }
+  }
+
+  @Post('/joinAd')
+  async joinAd(@Body() body : any) {
+    const { ai, ak, ap, net, uid } = body
+    try {
+      const response = await axios.post(`https://api.i-screen.kr/Inappapi/ads_join`, {
+        apikey: `${process.env.API_KEY}`,
+        ac: `${process.env.APP_CODE}`,
+        ai: ai,
+        ap: ap,
+        net: net,
+        uid: uid,
+        pub: "",
+        ak: ak,
+      })
+      return response.data
+    }
+    catch (error) {
+      console.log(error)
+    }
   }
 }
