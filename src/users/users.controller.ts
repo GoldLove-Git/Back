@@ -53,6 +53,6 @@ export class UsersController {
   async advertiseHistory(@Body() body: any, @Res() res: any) {
     let { userId } = body;
 
-    return 'advertisehistory';
+    return this.usersService.getAdvertiseHistory(userId);
   }
 }
