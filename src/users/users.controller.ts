@@ -69,6 +69,11 @@ export class UsersController {
 
   @Get('postback')
   async postback(@Query() data: any) {
+    if((data.key && data.ai && data.ao && data.userId)) {
+        return {
+          message : '광고 정보 파라미터가 누락됐습니다'
+        }
+    }
     return await this.usersService.setAd(data)
   }
 }

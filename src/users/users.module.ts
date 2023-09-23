@@ -13,4 +13,4 @@ import { AdvertisementRepository } from './advertisement.repository';
   providers: [UsersService, UsersRepository, AdvertisementRepository],
   exports: [UsersService],
 })
-export class UsersModule {}
+export class UsersModule {} 

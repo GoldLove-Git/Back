@@ -1,4 +1,4 @@
 export class PointInput {
-    userId : string
+    uid : string
     ao : string
 }
