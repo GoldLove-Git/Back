@@ -22,8 +22,8 @@ import { JwtService } from '@nestjs/jwt';
       password: process.env.DB_PASSWORD,
       database: process.env.DB_DATABASE,
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
-      synchronize: true,
-      //synchronize: false,
+      //synchronize: true,
+      synchronize: false,
     }),
     UsersModule,
     InfluencersModule,
@@ -36,10 +36,10 @@ export class AppModule {
   configure(consumer: MiddlewareConsumer) {
     consumer
       .apply(AuthMiddleWare)
-      .forRoutes(
-        { path: '/users/advertisehistory', method: RequestMethod.GET },
-        { path: '/users/goldhistory', method: RequestMethod.GET },
-        { path: '/users/mypage', method: RequestMethod.POST },
-      );
+      .forRoutes
+      //{ path: '/users/advertisehistory', method: RequestMethod.GET },
+      //{ path: '/users/goldhistory', method: RequestMethod.GET },
+      //{ path: '/users/mypage', method: RequestMethod.POST },
+      ();
   }
 }

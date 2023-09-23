@@ -55,7 +55,7 @@ export class UsersController {
     let { userId } = body;
     const goldHistory = await this.usersService.getGoldHistory(userId);
 
-    return goldHistory;
+    return res.status(HttpStatus.OK).json({ goldHistory });
   }
 
   @Get('advertisehistory')

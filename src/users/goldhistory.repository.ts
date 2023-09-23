@@ -11,18 +11,8 @@ export class GoldHistoryRepository {
   ) {}
 
   async getGoldHistory(userId: string) {
-    //   {
-    //     "data" : [
-    //         {
-    //             "influencer_name" : "인플루언서 이름",
-    //             "gold" : 2, // 지급한 골드 양
-    //             "date" : "2023-09-20" // 지급일
-    //         },
-    //         ...
-    //     ]
-    // }
     //위형태로 출력해야함
-    const goldHistory = await this.goldHistoryRepository.findOne({
+    const goldHistory = await this.goldHistoryRepository.find({
       where: {
         userId,
       },
