@@ -101,8 +101,28 @@ export class UsersController {
     const api_url = 'https://api.i-screen.kr'
     try {
       const response = await axios.get(`https://api.i-screen.kr/Inappapi/web_ads_list?apikey=${process.env.API_KEY}&appcode=${process.env.APP_CODE}`)
-      console.log(response.data.list_data)
       return response.data.list_data
+    }
+    catch (error) {
+      console.log(error)
+    }
+  }
+
+  @Post('/joinAd')
+  async joinAd(@Body() body : any) {
+    const { adId, userIP, userNetworkType, uid, id } = body
+    try {
+      const response = await axios.post(`https://api.i-screen.kr/Inappapi/ads_join`, {
+        apikey: `${process.env.API_KEY}`,
+        ac: `${process.env.APP_CODE}`,
+        ai: adId,
+        ap: userIP,
+        net: userNetworkType,
+        uid: uid,
+        pub: "",
+        ak: id,
+      })
+      return response.data
     }
     catch (error) {
       console.log(error)
