@@ -2,11 +2,8 @@ import { Body, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Users } from './entities/users.entity';
 import { Repository } from 'typeorm';
-<<<<<<< HEAD
 import { PointInput } from './dto/pointInput.dto';
-=======
 import { SignUpDto } from './dto/signup.dto';
->>>>>>> ba056e297614b971e0da3989e0efe77fec725ec7
 
 @Injectable()
 export class UsersRepository {
