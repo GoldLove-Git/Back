@@ -65,8 +65,8 @@ export class UsersService {
   }
 
   // 지급 골드 내역 조회
-  async getGoldHistory(userId: string) {
-    const goldHistory = await this.usersRepository.getGoldHistory(userId);
-    return goldHistory;
-  }
+  // async getGoldHistory(userId: string) {
+  //   const goldHistory = await this.usersRepository.getGoldHistory(userId);
+  //   return goldHistory;
+  // }
 }

@@ -1,7 +1,7 @@
 import { Body, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Users } from './entities/users.entity';
-import { GoldHistory } from './entities/goldHistory.entity';
+//import { GoldHistory } from './entities/goldHistory.entity';
 import { Repository } from 'typeorm';
 import { PointInput } from './dto/pointInput.dto';
 import { SignUpDto } from './dto/signup.dto';
@@ -11,8 +11,8 @@ export class UsersRepository {
   constructor(
     @InjectRepository(Users)
     private readonly usersRepository: Repository<Users>,
-    private readonly goldHistoryRepository: Repository<GoldHistory>,
-  ) {}
+  ) //private readonly goldHistoryRepository: Repository<GoldHistory>,
+  {}
 
   async findUserByUser(
     userId: string,
@@ -68,13 +68,13 @@ export class UsersRepository {
     await this.usersRepository.save(result);
   }
 
-  // 지급 골드 내역 조회
-  async getGoldHistory(userId: string) {
-    const goldHistory = await this.goldHistoryRepository.find({
-      where: {
-        userId,
-      },
-    });
-    return goldHistory;
-  }
+  // // 지급 골드 내역 조회
+  // async getGoldHistory(userId: string) {
+  //   const goldHistory = await this.goldHistoryRepository.find({
+  //     where: {
+  //       userId,
+  //     },
+  //   });
+  //   return goldHistory;
+  // }
 }

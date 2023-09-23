@@ -9,7 +9,7 @@ import { AdvertisementRepository } from './advertisement.repository';
 import { GoldHistory } from './entities/goldHistory.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Users, Advertisement, GoldHistory])],
+  imports: [TypeOrmModule.forFeature([Users, Advertisement])],
   controllers: [UsersController],
   providers: [UsersService, UsersRepository, AdvertisementRepository],
   exports: [UsersService],
