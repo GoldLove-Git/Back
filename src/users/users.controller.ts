@@ -50,8 +50,19 @@ export class UsersController {
     return this.usersService.getAdvertiseHistory(userId);
   }
 
+  @Post('id/check')
+  async checkID(@Body() userId: string) {
+    const exUser = await this.usersService.checkID(userId);
+    if (!exUser) {
+      return { isvalid: true }
+    }
+    else {
+      return { isvalid: false }
+    }
+  }
+
   @Get('postback')
-  async postback(@Query() data : any) {
+  async postback(@Query() data: any) {
     return await this.usersService.setAd(data)
   }
 }
