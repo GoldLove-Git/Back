@@ -12,17 +12,17 @@ export class ChatService {
     private readonly chat: Repository<Chat>,
   ) {}
 
-    async getChatList(influencerId : string) : Promise<ChatListDto[]> {
-        return this.chat.find({
-            where : {
-                influencerId : influencerId
-            },
-            take : 20,
-            order : {
-                CreatedAt : 'DESC'
-            }
-        })
-
+  async getChatList(influencerId: string): Promise<ChatListDto[]> {
+    return this.chat.find({
+      where: {
+        influencerId: influencerId,
+      },
+      take: 20,
+      order: {
+        CreatedAt: 'DESC',
+      },
+    });
+  }
   async setChat(chatInputDto: ChatInputDto): Promise<Chat> {
     const result = this.chat.create({
       comment: chatInputDto.comment,
