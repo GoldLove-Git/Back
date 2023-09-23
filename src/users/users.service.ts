@@ -40,7 +40,7 @@ export class UsersService {
     const { key, ai, ao, userId} : AdWriteDto = data
     const adCheck : AdCheckDto = {key ,ai, userId}
     const adCheckRes = await this.advertisementRepository.adCheck(adCheck)
-    if(!adCheckRes) {
+    if(adCheckRes) {
       return {
         message : '참여 기록이 있습니다' 
       }
