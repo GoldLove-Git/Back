@@ -12,6 +12,9 @@ export class Influencers {
   influencerName: string;
 
   @Column()
+  influencerImg: string;
+
+  @Column()
   nowGold: string;
 
   @Column()
